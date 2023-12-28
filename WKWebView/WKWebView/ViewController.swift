@@ -15,33 +15,41 @@ class ViewController: UIViewController, WKNavigationDelegate {
     let backButton  =  UIBarButtonItem(systemItem: .rewind)
     let forwardButton = UIBarButtonItem(systemItem: .fastForward)
     let refreshButton = UIBarButtonItem(systemItem: .refresh)
-    var searchBar  = UISearchBar()
+    let searchBar  = UISearchBar()
+    let toolBarSearch = UIToolbar()
     let space = UIBarButtonItem(systemItem: .flexibleSpace)
+    var barViewSearch = UIBarButtonItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(webView)
         view.addSubview(toolBar)
         view.addSubview(searchBar)
+        view.addSubview(toolBarSearch)
        
+        barViewSearch = UIBarButtonItem(customView: searchBar)
         webView.translatesAutoresizingMaskIntoConstraints = false
         toolBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.translatesAutoresizingMaskIntoConstraints = false
+        toolBarSearch.translatesAutoresizingMaskIntoConstraints = false
+    
         
         toolBar.items = [backButton,forwardButton,space,refreshButton]
+        toolBarSearch.items = [barViewSearch]
         NSLayoutConstraint.activate([
-            webView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
             toolBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             toolBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             toolBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            toolBar.topAnchor.constraint(equalTo: webView.bottomAnchor),
+            toolBar.topAnchor.constraint(equalTo: toolBarSearch.bottomAnchor),
             
-            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            toolBarSearch.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            toolBarSearch.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            toolBarSearch.bottomAnchor.constraint(equalTo: toolBar.topAnchor),
+            toolBarSearch.topAnchor.constraint(equalTo: webView.bottomAnchor),
 
         ])
         
